@@ -1,0 +1,70 @@
+{
+    "activationEvents": [
+        "workspaceContains:deptrac.yaml"
+    ],
+    "author": "ctf0",
+    "categories": [
+        "Other"
+    ],
+    "contributes": {
+        "commands": [
+            {
+                "category": "Deptrac",
+                "command": "deptrac.analyze",
+                "title": "Analyze Project"
+            }
+        ],
+        "configuration": {
+            "properties": {
+                "deptrac.command": {
+                    "default": "./vendor/bin/deptrac analyse --no-progress --no-interaction -f json",
+                    "description": "deptrac command",
+                    "type": "string"
+                },
+                "deptrac.dockerVolumePath": {
+                    "default": "/var/www/html",
+                    "description": "if using docker, this should be the main container volume path (defaults to laravel/sail)",
+                    "type": "string"
+                },
+                "deptrac.phpCommand": {
+                    "default": "php",
+                    "description": "the php command path (any quotes needs to be escaped)",
+                    "type": "string"
+                },
+                "deptrac.watchGlob": {
+                    "default": "**/deptrac*.yaml",
+                    "description": "file glob to watch to trigger re-analyze when changed",
+                    "type": "string"
+                }
+            },
+            "title": "Deptrac"
+        }
+    },
+    "dependencies": {
+        "execa": "^9.6.0"
+    },
+    "description": "deptrac vscode portal",
+    "devDependencies": {
+        "@types/node": "^24.3.1",
+        "@types/vscode": "^1.90.0",
+        "esbuild": "^0.25.9",
+        "typescript": "^5.9.2"
+    },
+    "displayName": "Deptrac",
+    "engines": {
+        "vscode": "^1.90.0"
+    },
+    "icon": "icon.jpg",
+    "main": "./out/main",
+    "name": "vscode-deptrac",
+    "publisher": "ctf0",
+    "repository": "https://github.com/ctf0/vscode-deptrac",
+    "scripts": {
+        "esbuild": "npm run esbuild-base -- --sourcemap",
+        "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node",
+        "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
+        "vscode:prepublish": "npm run esbuild-base -- --pure:console.log --minify",
+        "watch": "npm run esbuild"
+    },
+    "version": "0.0.1"
+}
